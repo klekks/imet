@@ -33,6 +33,7 @@ def clear_ruz(message):
 
 
 def ruz_group_wait(message, events):
+    clear_ruz(message)
     group = message.text
     print(1)
     from requests import get
@@ -59,7 +60,7 @@ def ruz_group_wait(message, events):
     ruz = loads(res.text)
     today = datetime.datetime.today().strftime("%Y-%m-%d")
     week = list(ruz['days'])
-    print(9)
+    print(list(filter(lambda day: day['date'] == today, week)))
     ruz_for_today = list(filter(lambda day: day['date'] == today, week))[0]
     print(10)
     lessons = ruz_for_today['lessons']
