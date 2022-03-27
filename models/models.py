@@ -95,7 +95,7 @@ class Button(peewee.Model):
         return button
 
     @staticmethod
-    def on_click(page, name) -> (Page, None, list['Button']):
+    def on_click(page, name):
         try:
             b = Button.select(Button).where(Button.page.id == page).where(Button.name == name).get()
         except peewee.DoesNotExist:
@@ -108,7 +108,6 @@ class Button(peewee.Model):
         else:
             buttons = Button.select(Button).where(Button.page.id == page.id)[:]
             return buttons
-
 
     def to_dict(self):
         return {
