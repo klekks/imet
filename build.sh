@@ -2,7 +2,7 @@
 
 echo "Start build.sh"
 
-pkill python3
+sudo pkill python3
 
 pip3 install -r ./requirements.txt
 
