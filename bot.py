@@ -34,39 +34,40 @@ def clear_ruz(message):
 
 def ruz_group_wait(message, events):
     group = message.text
-    print(1)
+
     from requests import get
     import re
     res = get("https://ruz.spbstu.ru/search/groups?q={0}".format(group))
-    print(2)
+
     if res.status_code != 200:
         return
-    print(3)
+
     data = re.search(r"<script>\s*window\.__INITIAL_STATE__ = (.*)\s*;\s*</script>", res.text).group(1)
-    print(4)
     data = loads(data)
     group_id = data["searchGroup"]["data"][0]["id"]
     group_name = data["searchGroup"]["data"][0]["name"]
-    print(5)
+
     message.from_user.user_group = group_name
     message.from_user.save()
-    print(6)
+
     res = get("https://ruz.spbstu.ru/api/v1/ruz/scheduler/{0}".format(group_id))
-    print(7)
+
     if res.status_code != 200:
         return
-    print(8)
+
     ruz = loads(res.text)
     today = datetime.datetime.today().strftime("%Y-%m-%d")
     week = list(ruz['days'])
-    print(9)
+
+    message.from_user.current_page = Page.select(Page).where(Page.id == 1).get()
+    message.from_user.save()
     reply_markup = gen_markup(message.from_user.current_page.id)
     try:
         ruz_for_today = list(filter(lambda day: day['date'] == today, week))[0]
     except:
         bot.send_message(message.chat.id, "Нет пар на сегодня", reply_markup=reply_markup)
         return
-    print(10)
+
     lessons = ruz_for_today['lessons']
 
     ruz = ["Расписание для {1} на {0}:".format(today, group_name), ]
@@ -75,19 +76,13 @@ def ruz_group_wait(message, events):
         ruz.append(
          "📍 {0}: {1} ({2}, ауд. {3})".format(i['time_start'], i['subject_short'], i['auditories'][0]['building']['name'], i['auditories'][0]['name'])
         )
-    if len(ruz) == 1:
-        ruz.append("На сегодня пар нет.")
-    print(11)
-    message.from_user.current_page = Page.select(Page).where(Page.id == 1).get()
-    message.from_user.save()
-    reply_markup = gen_markup(message.from_user.current_page.id)
-    print(12)
+
     for i in events:
         i.delete_instance()
 
     for msg in ruz:
         bot.send_message(message.chat.id, msg, reply_markup=reply_markup)
-    print(13)
+
 
 ACTIONS = {
     "sayhi": sayhi,
