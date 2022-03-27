@@ -1,3 +1,2 @@
-pkill python3
-
-python3 ./bot.py
+pkill python3&
+python3 ./bot.py&
