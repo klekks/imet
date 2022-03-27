@@ -27,6 +27,7 @@ def ruz_markup(message, markup):
 def clear_ruz(message):
     for i in WaitEvent.select(WaitEvent).join(User).where(User == message.from_user):
         i.delete_instance()
+        i.save()
 
     message.from_user.current_page = 1
     message.from_user.save()
@@ -123,11 +124,11 @@ def check_if_wait(bot_instance, message):
     else:
         try:
             message.replied = True
-            print(msgs[0].event)
             ACTIONS[msgs[0].event](message, msgs)
         except:
-            bot.reply_to(message, "Troubles")
-            clear_ruz(message)
+            for msg in msgs:
+                msg.delete_instance()
+                msg.save()
             message.replied = False
 
 
