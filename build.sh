@@ -2,11 +2,9 @@
 
 echo "Start build.sh"
 
-sudo pkill python3 > pkill.log
-
 pip3 install -r ./requirements.txt > pip.log
 
-python3 bot.py& > python.log
-
+chmod 755 bot.sh
+./bot.sh &
 
 echo "End build.sh !!!!!"
