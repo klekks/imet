@@ -122,6 +122,7 @@ def check_if_wait(bot_instance, message):
     else:
         try:
             message.replied = True
+            print(msgs[0].event)
             ACTIONS[msgs[0].event](message, msgs)
         except:
             bot.reply_to(message, "Troubles")
@@ -155,7 +156,6 @@ def add_button(message: telebot.types.Message):
 
 @bot.message_handler(func=lambda m: not m.replied)
 def echo_all(message: telebot.types.Message):
-    print(message)
     try:
         print(message.from_user.to_dict())
         pressed_button = Button.select(Button, Page).join(Page).where(Page.id == message.from_user.current_page.id)\
