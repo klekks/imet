@@ -2,8 +2,7 @@
 
 echo "Start build.sh"
 
-pkill *python*
-pkill bot
+pkill python3
 
 pip3 install -r ./requirements.txt &
 python3 ./bot.py &
