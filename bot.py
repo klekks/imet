@@ -59,10 +59,11 @@ def ruz_group_wait(message, events):
     ruz = loads(res.text)
     today = datetime.datetime.today().strftime("%Y-%m-%d")
     week = list(ruz['days'])
-    print(week)
+    print(9)
     ruz_for_today = list(filter(lambda day: day['date'] == today, week))[0]
-    lessons = ruz_for_today['lessons']
     print(10)
+    lessons = ruz_for_today['lessons']
+
     ruz = ["Расписание для {1} на {0}:".format(today, group_name), ]
 
     for i in lessons:
