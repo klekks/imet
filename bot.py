@@ -33,7 +33,6 @@ def clear_ruz(message):
 
 
 def ruz_group_wait(message, events):
-    clear_ruz(message)
     group = message.text
     print(1)
     from requests import get
@@ -133,6 +132,7 @@ def check_if_wait(bot_instance, message):
             ACTIONS[msgs[0].event](message, msgs)
         except:
             bot.reply_to(message, "Troubles")
+            clear_ruz(message)
             message.replied = False
 
 
