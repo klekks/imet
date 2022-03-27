@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "in build bash"
+echo "in build bash 2"
