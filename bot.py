@@ -124,6 +124,7 @@ def check_if_wait(bot_instance, message):
             message.replied = True
             ACTIONS[msgs[0].event](message, msgs)
         except:
+            bot.reply_to(message, "Troubles")
             message.replied = False
 
 
