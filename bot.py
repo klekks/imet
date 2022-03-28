@@ -1,12 +1,13 @@
 import telebot
 from models.models import Button, Page, User, Account, Event, WaitEvent
 import datetime
+import os
 
 from json import loads, dumps
 
 
 telebot.apihelper.ENABLE_MIDDLEWARE = True
-bot = telebot.TeleBot("5253201490:AAFEjwiJgHQe_pALCgwcS0Yj4ylRatDQq1Y", parse_mode=None)
+bot = telebot.TeleBot(os.environ.get('API_KEY'), parse_mode=None)
 
 
 def sayhi(message):
